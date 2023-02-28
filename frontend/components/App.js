@@ -15,7 +15,7 @@ export default function App() {
   // ✨ MVP can be achieved with these states
   const [message, setMessage] = useState('')
   const [articles, setArticles] = useState([])
-  const [currentArticleId, setCurrentArticleId] = useState(7)
+  const [currentArticleId, setCurrentArticleId] = useState(null)
   const [spinnerOn, setSpinnerOn] = useState(false)
 
   const navigate = useNavigate()
@@ -92,9 +92,13 @@ const myTestingFn = () => {
     axiosWithAuth().put(`/articles/${article_id}`, article)
       .then(res => {
         console.log(res);
+        getArticles();
+        setMessage(res.data.message)
+        setSpinnerOn(false);
       })
       .catch(err => {
         console.log(err);
+        setSpinnerOn(false);
       })
     // ✨ implement
   }
