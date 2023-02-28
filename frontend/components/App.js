@@ -18,20 +18,14 @@ export default function App() {
   const [currentArticleId, setCurrentArticleId] = useState()
   const [spinnerOn, setSpinnerOn] = useState(false)
 
-  // ✨ Research `useNavigate` in React Router v.6
   const navigate = useNavigate()
-  const redirectToLogin = () => navigate("/");{ /* ✨ implement */ }
-  const redirectToArticles = () => navigate("/articles");{ /* ✨ implement */ }
+  const redirectToLogin = () => navigate("/");
+  const redirectToArticles = () => navigate("/articles");
 
   const logout = () => {
-    // ✨ implement
-    // If a token is in local storage it should be removed,
     localStorage.removeItem("token");
-    // and a message saying "Goodbye!" should be set in its proper state.
     setMessage("Goodbye!");
-    // In any case, we should redirect the browser back to the login screen,
     redirectToLogin();
-    // using the helper above.
   }
 
   const login = ({ username, password }) => {
@@ -48,13 +42,8 @@ export default function App() {
   }
 
   const getArticles = () => {
-    // ✨ implement
     setMessage("");
     setSpinnerOn(true);
-    // and launch an authenticated request to the proper endpoint.
-    // If something goes wrong, check the status of the response:
-    // if it's a 401 the token might have gone bad, and we should redirect to login.
-    // Don't forget to turn off the spinner!
 
     axiosWithAuth()
       .get("/articles")
@@ -76,7 +65,6 @@ export default function App() {
 
     axiosWithAuth().post("/articles", article)
       .then(res => {
-        console.log(res);
         setMessage(res.data.message);
         setSpinnerOn(false);
         getArticles();
@@ -90,8 +78,17 @@ export default function App() {
   }
 
   const updateArticle = ({ article_id, article }) => {
+    setMessage("");
+    setSpinnerOn(true);
+
+    axiosWithAuth().put(`/articles/${article_id}`, article)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      })
     // ✨ implement
-    // You got this!
   }
 
   const deleteArticle = article_id => {
@@ -100,7 +97,6 @@ export default function App() {
 
     axiosWithAuth().delete(`/articles/${article_id}`)
       .then(res => {
-        console.log(res);
         setMessage(res.data.message);
         getArticles();
       })
@@ -110,8 +106,9 @@ export default function App() {
       })
   }
 
+
+
   return (
-    // ✨ fix the JSX: `Spinner`, `Message`, `LoginForm`, `ArticleForm` and `Articles` expect props ❗
     <>
       <Spinner on={spinnerOn}/>
       <Message message={message}/>
