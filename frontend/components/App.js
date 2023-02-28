@@ -67,7 +67,7 @@ export default function App() {
       .then(res => {
         setMessage(res.data.message);
         setSpinnerOn(false);
-        getArticles();
+        setArticles([...articles, res.data.article] )
         redirectToArticles();
       })
       .catch(err => {
