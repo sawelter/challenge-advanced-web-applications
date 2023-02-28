@@ -7,7 +7,6 @@ import ArticleForm from './ArticleForm'
 import Spinner from './Spinner'
 
 import axiosWithAuth from '../axios'
-import PrivateRoute from './PrivateRoute'
 
 const articlesUrl = 'http://localhost:9000/api/articles'
 const loginUrl = 'http://localhost:9000/api/login'
@@ -17,20 +16,12 @@ export default function App() {
   // ✨ MVP can be achieved with these states
   const [message, setMessage] = useState('')
   const [articles, setArticles] = useState([])
-  const [currentArticleId, setCurrentArticleId] = useState(null)
+  const [currentArticleId, setCurrentArticleId] = useState(1)
   const [spinnerOn, setSpinnerOn] = useState(false)
 
   const navigate = useNavigate()
   const redirectToLogin = () => navigate("/");
   const redirectToArticles = () => navigate("/articles");
-
-const myTestingFn = () => {
-  console.log(`currentArticleId is ${currentArticleId}`);
-  console.log(articles.filter(article => {
-    console.log(`article id: ${article.article_id}`)
-    return article.article_id === currentArticleId;
-  })[0])
-}
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -94,13 +85,20 @@ const myTestingFn = () => {
     axiosWithAuth().put(`/articles/${article_id}`, article)
       .then(res => {
         console.log(res);
-        getArticles();
         setMessage(res.data.message)
         setSpinnerOn(false);
+        console.log(res.data);
+
+        for(let i = 0; i < articles.length; i++) {
+          if(article_id === articles[i].article_id) {
+            articles[i] = { ...res.data.article }
+          }
+        }
       })
       .catch(err => {
-        console.log(err);
         setSpinnerOn(false);
+        setMessage(err.response.statusText)
+        redirectToArticles();
       })
     // ✨ implement
   }
@@ -136,7 +134,6 @@ const myTestingFn = () => {
 
   return (
     <>
-<button onClick={myTestingFn}>Test test test</button>
       <Spinner on={spinnerOn}/>
       <Message message={message}/>
       <button id="logout" onClick={logout}>Logout from app</button>
