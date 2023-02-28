@@ -98,7 +98,10 @@ export default function App() {
     axiosWithAuth().delete(`/articles/${article_id}`)
       .then(res => {
         setMessage(res.data.message);
-        getArticles();
+        setArticles(articles.filter(article => {
+          return article_id !== article.article_id
+        }))
+        setSpinnerOn(false);
       })
       .catch(err => {
         setMessage(err.response.statusText)
