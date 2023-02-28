@@ -49,10 +49,10 @@ export default function ArticleForm(props) {
     // UPDATE POST
     else {
       updateArticle({article_id: currentArticle.article_id, article: values});
+      setCurrentArticleId(null);
     }
 
     setValues(initialFormValues)
-    setCurrentArticleId(null);
   }
 
 
