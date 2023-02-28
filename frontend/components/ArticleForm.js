@@ -17,12 +17,23 @@ export default function ArticleForm(props) {
 
 
   useEffect(() => {
-    setCurrentArticleId(5);
     // ✨ implement
     // Every time the `currentArticle` prop changes, we should check it for truthiness:
     // if it's truthy, we should set its title, text and topic into the corresponding
-
     // values of the form. If it's not, we should reset the form back to initial values.
+    console.log("We are in ArticleForm.js");
+    console.log("Current article : ");
+    console.log(currentArticle);
+    if(currentArticle){
+      setValues({
+        title: currentArticle.title,
+        text: currentArticle.text,
+        topic: currentArticle.topic
+      })
+      console.log("Values: " )
+      console.log(values);
+    }
+    
   }, [currentArticle])
 
   const onChange = evt => {

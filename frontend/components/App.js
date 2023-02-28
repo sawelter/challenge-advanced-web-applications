@@ -15,12 +15,20 @@ export default function App() {
   // ✨ MVP can be achieved with these states
   const [message, setMessage] = useState('')
   const [articles, setArticles] = useState([])
-  const [currentArticleId, setCurrentArticleId] = useState()
+  const [currentArticleId, setCurrentArticleId] = useState(7)
   const [spinnerOn, setSpinnerOn] = useState(false)
 
   const navigate = useNavigate()
   const redirectToLogin = () => navigate("/");
   const redirectToArticles = () => navigate("/articles");
+
+const myTestingFn = () => {
+  console.log(`currentArticleId is ${currentArticleId}`);
+  console.log(articles.filter(article => {
+    console.log(`article id: ${article.article_id}`)
+    return article.article_id === currentArticleId;
+  })[0])
+}
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -109,10 +117,20 @@ export default function App() {
       })
   }
 
+  const currentArticle = () => {
+    const filtered = articles.filter(article => article.article_id === currentArticleId)
+    if(filtered.length === 0) {
+      return null;
+    } else {
+      return filtered[0];
+    }
+  }
+
 
 
   return (
     <>
+<button onClick={myTestingFn}>Test test test</button>
       <Spinner on={spinnerOn}/>
       <Message message={message}/>
       <button id="logout" onClick={logout}>Logout from app</button>
@@ -135,6 +153,7 @@ export default function App() {
                 setCurrentArticleId={setCurrentArticleId}
                 postArticle={postArticle}
                 updateArticle={updateArticle}
+                currentArticle={currentArticle()}
               />
               <Articles 
                 articles={articles}
