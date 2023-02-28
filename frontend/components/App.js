@@ -6,10 +6,12 @@ import Message from './Message'
 import ArticleForm from './ArticleForm'
 import Spinner from './Spinner'
 
+import axiosWithAuth from '../axios'
+import PrivateRoute from './PrivateRoute'
+
 const articlesUrl = 'http://localhost:9000/api/articles'
 const loginUrl = 'http://localhost:9000/api/login'
 
-import axiosWithAuth from '../axios'
 
 export default function App() {
   // ✨ MVP can be achieved with these states

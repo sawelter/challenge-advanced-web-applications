@@ -4,6 +4,10 @@ import PT from 'prop-types'
 import axiosWithAuth from '../axios';
 
 export default function Articles(props) {
+  if(!localStorage.getItem("token")) {
+    return <Navigate to="/" />
+  }
+
   const {
     articles,
     getArticles,
