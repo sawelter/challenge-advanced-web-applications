@@ -71,10 +71,22 @@ export default function App() {
   }
 
   const postArticle = article => {
-    // ✨ implement
-    // The flow is very similar to the `getArticles` function.
-    // You'll know what to do! Use log statements or breakpoints
-    // to inspect the response from the server.
+    setMessage("");
+    setSpinnerOn(true);
+
+    axiosWithAuth().post("/articles", article)
+      .then(res => {
+        console.log(res);
+        setMessage(res.data.message);
+        setSpinnerOn(false);
+        getArticles();
+        redirectToArticles();
+      })
+      .catch(err => {
+        setSpinnerOn(false);
+        setMessage(err.response.statusText)
+        redirectToArticles();
+      })
   }
 
   const updateArticle = ({ article_id, article }) => {
@@ -83,7 +95,19 @@ export default function App() {
   }
 
   const deleteArticle = article_id => {
-    // ✨ implement
+    setMessage("");
+    setSpinnerOn(true);
+
+    axiosWithAuth().delete(`/articles/${article_id}`)
+      .then(res => {
+        console.log(res);
+        setMessage(res.data.message);
+        getArticles();
+      })
+      .catch(err => {
+        setMessage(err.response.statusText)
+        setSpinnerOn(false);
+      })
   }
 
   return (
