@@ -93,6 +93,14 @@ h2 {
   margin-bottom: 0.2rem;
 }
 
+.loginmessage p {
+  color: #ff4b00;
+  margin-top: -2rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.5rem;
+  font-weight: normal;
+}
+
 button {
   border: 1px solid #DDDDDD;
   border-radius: 0;

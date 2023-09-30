@@ -29,6 +29,7 @@ export default function LoginForm(props) {
   return (
     <form id="loginForm" onSubmit={onSubmit}>
       <h2>Login</h2>
+      <div className="loginmessage"><p>For the purposes of this application, the login is insecure; the username can be anything >3 characters, and the password can be anything >7 characters.</p></div>
       <input
         maxLength={20}
         value={values.username}
